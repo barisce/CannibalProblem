@@ -1,9 +1,9 @@
 
 public class treeNode {
 	private boolean visited;
-	private boolean boat; //if false boat is going left if true boat is going right
-	private int m;
-	private int c;
+	private boolean boat; //if false boat is going left if true boat is going right. Or true = boat is left side, false = boat is right side 
+	private int m;	// missionaries on left side, right side missionaries = 3 - m
+	private int c;	// cannibals on left side, right side cannibals = 3 - c
 	private treeNode x, y, z, t, k; 
 
     public treeNode () { 
@@ -30,6 +30,18 @@ public class treeNode {
         this.m = m;
         this.c = c;
         boat = false;
+        visited = false;
+        x = null;
+        y = null;
+        z = null;
+        t = null;
+        k = null;
+    }
+	
+	public treeNode (int m, int c, boolean boat) { 
+        this.m = m;
+        this.c = c;
+        this.boat = boat;
         visited = false;
         x = null;
         y = null;
@@ -101,5 +113,27 @@ public class treeNode {
 	public void setK(treeNode k) {
 		this.k = k;
 	} 
+	
+	public crossRiver treeNode( int c, int m){ // c or m <=2 && c+m <= 2 && c + m > 0
+		int cNew = 0;
+		int mNew = 0;
+		
+		if( boat){
+			cNew = this.c - c;
+			mNew = this.m - m;
+			return treeNode( cNew, mNew, false);
+		}
+		else{
+			cNew = this.c + c;
+			mNew = this.m + m;
+			return treeNode( cNew, mNew, false);
+		}
+	}
+	
+	public boolean isFail(){
+		
+		if ( (Math.abs(c - m ) > 0 ) && (c!= 0) && (m!= 0))
+			return true;
+	}
 	
 }
