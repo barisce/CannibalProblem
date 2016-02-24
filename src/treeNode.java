@@ -1,6 +1,7 @@
 
 public class treeNode {
 	private boolean visited;
+	private boolean boat; //if false boat is going left if true boat is going right
 	private int m;
 	private int c;
 	private treeNode x, y, z, t, k; 
@@ -8,6 +9,7 @@ public class treeNode {
     public treeNode () { 
     	m = 3;
     	c = 3;
+    	boat = false;
     	visited = false;
         x = null;
         y = null;
@@ -16,9 +18,18 @@ public class treeNode {
         k = null; 
     } 
     
-    public treeNode (int m, int c) { 
+    public boolean isBoat() {
+		return boat;
+	}
+
+	public void setBoat(boolean boat) {
+		this.boat = boat;
+	}
+
+	public treeNode (int m, int c) { 
         this.m = m;
         this.c = c;
+        boat = false;
         visited = false;
         x = null;
         y = null;
