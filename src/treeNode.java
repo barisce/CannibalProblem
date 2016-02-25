@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class treeNode {
 	private boolean visited;
 	private boolean boat; //if false boat is going left if true boat is going right. Or true = boat is left side, false = boat is right side 
@@ -114,49 +116,66 @@ public class treeNode {
 		this.k = k;
 	} 
 	
-	public crossRiver treeNode( int c, int m){ // c or m <=2 && c+m <= 2 && c + m > 0
+	public treeNode crossRiver( int c, int m)
+	{ // c or m <=2 && c+m <= 2 && c + m > 0
 		int cNew = 0;
 		int mNew = 0;
 		
-		if( boat){
+		if( boat)
+		{
 			cNew = this.c - c;
 			mNew = this.m - m;
-			return treeNode( cNew, mNew, false);
+			treeNode newNode = new treeNode (cNew, mNew, false);
+			return newNode;
 		}
-		else{
+		else
+		{
 			cNew = this.c + c;
 			mNew = this.m + m;
-			return treeNode( cNew, mNew, false);
+			treeNode newNode = new treeNode (cNew, mNew, true);
+			return newNode;
 		}
 	}
 	
-	public boolean isFail(){
-		
+	public boolean isFail()
+	{
 		if ( (Math.abs(c - m ) > 0 ) && (c!= 0) && (m!= 0))
+		{
 			return true;
+		}	
+		return false;
 	}
 	
-}
+	public boolean isFound()
+	{
+		if (this.getC() == 0 && this.getM() == 0)
+			return true;
+		else
+			return false;
+	}
 
-
-	public void expand(){
+	public ArrayList<treeNode> expand()
+	{
 		if ( this.isFail() || this.isVisited() )
-			return;
-		else {
+		{
+			childList.clear();
+			return childList;
+		}
+		else 
+		{
 			x = crossRiver(2, 0);
 			y = crossRiver(1, 1);
 			z = crossRiver(1, 1);
 			t = crossRiver(0, 1);
 			k = crossRiver(0, 2);
-			return; // return childList shallow copy childList.clone()
+			childList.add(x);
+			childList.add(y);
+			childList.add(z);
+			childList.add(t);
+			childList.add(k);
+			
+			return childList; // return childList shallow copy childList.clone()
 		}
-	}
-	
-	public void checkVisited(ArrayList<treeNode> extendedList){
-		// check the iterator shits
-		// compare and shit
-	
-		
 	}
 	
 	public boolean compare( treeNode extendedNode){
@@ -165,3 +184,4 @@ public class treeNode {
 		else
 			return false;
 	}
+}
