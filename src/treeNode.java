@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class treeNode {
 	private boolean visited;
@@ -17,7 +18,7 @@ public class treeNode {
         z = null;
         t = null;
         k = null; 
-        childList = new ArrayList<treeNode>(5);
+		childList = new ArrayList<treeNode>(5);
     } 
     
     public boolean isBoat() {
@@ -134,58 +135,75 @@ public class treeNode {
 		}
 	}
 	
-	public boolean isFail(){
-		
+	public boolean isFail()
+	{
 		if ( (Math.abs(c - m ) > 0 ) && (c!= 0) && (m!= 0))
+		{
 			return true;
+		}	
+		return false;
 	}
 	
-}
-
+	public boolean isFound()
+	{
+		if (this.getC() == 0 && this.getM() == 0)
+			return true;
+		else
+			return false;
+	}
 
 	public ArrayList<treeNode> expand()
 	{
 		if ( this.isFail() || this.isVisited() )
-		{
 			childList.clear();
-			return childList;
-		}
 		else 
 		{
 			x = crossRiver(2, 0);
-			y = crossRiver(1, 1);
+			y = crossRiver(1, 0);
 			z = crossRiver(1, 1);
 			t = crossRiver(0, 1);
 			k = crossRiver(0, 2);
-			
 			childList.add(x);
 			childList.add(y);
 			childList.add(z);
 			childList.add(t);
 			childList.add(k);
-			
-			return childList; // return childList shallow copy childList.clone()
 		}
-		}
-	
-	public void checkVisited(ArrayList<treeNode> extendedList){
-		Iterator<treeNode> extndItr = extendedList.iterator();
-		
-		while( extndItr.hasNext() ){
-			treeNode local = extndItr.next();
-			if (this.compare(local)){
-				this.isVisited = true
-				return;
-			}
-		}
-
-	
-		
+		return childList;
 	}
 	
+	//compares two treeNodes that if they are the same or not
 	public boolean compare( treeNode extendedNode){
 		if ( ( extendedNode.getC() == this.c) && ( extendedNode.getM() == this.m) && (extendedNode.isBoat() == this.boat) )
 			return true;
 		else
 			return false;
 	}
+	
+	//returns the visited child node since only one child can be visited per run
+	private treeNode getVisitedChild()
+	{
+		if (this.getX().visited)
+			return this.x;
+		if (this.getY().visited)
+			return this.y;
+		if (this.getZ().visited)
+			return this.z;
+		if (this.getT().visited)
+			return this.t;
+		if (this.getK().visited)
+			return this.k;
+		return this;
+	}
+	
+	public String toString(treeNode node)
+	{
+		String result = "";
+		while (!node.getVisitedChild().compare(node))
+		{
+			result += "C = " + node.getC() + "M = " + node.getM() + "Boat position = " + node.isBoat() + "\n";
+			node = node.getVisitedChild();
+		}
+		return result;
+	}
+}
