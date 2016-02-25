@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 
 public class treeNode {
 	private boolean visited;
@@ -18,6 +17,7 @@ public class treeNode {
         z = null;
         t = null;
         k = null; 
+        childList = new ArrayList<treeNode>(5);
     } 
     
     public boolean isBoat() {
@@ -38,6 +38,7 @@ public class treeNode {
         z = null;
         t = null;
         k = null;
+        childList = new ArrayList<treeNode>(5);
     }
 	
 	public treeNode (int m, int c, boolean boat) { 
@@ -50,6 +51,7 @@ public class treeNode {
         z = null;
         t = null;
         k = null;
+        childList = new ArrayList<treeNode>(5);
     }
 
 	public boolean isVisited() {
@@ -116,43 +118,30 @@ public class treeNode {
 		this.k = k;
 	} 
 	
-	public treeNode crossRiver( int c, int m)
-	{ // c or m <=2 && c+m <= 2 && c + m > 0
+	public treeNode crossRiver( int c, int m){ // c or m <=2 && c+m <= 2 && c + m > 0
 		int cNew = 0;
 		int mNew = 0;
 		
-		if( boat)
-		{
+		if( boat){
 			cNew = this.c - c;
 			mNew = this.m - m;
-			treeNode newNode = new treeNode (cNew, mNew, false);
-			return newNode;
+			return new treeNode( cNew, mNew, false);
 		}
-		else
-		{
+		else{
 			cNew = this.c + c;
 			mNew = this.m + m;
-			treeNode newNode = new treeNode (cNew, mNew, true);
-			return newNode;
+			return new treeNode( cNew, mNew, true);
 		}
 	}
 	
-	public boolean isFail()
-	{
+	public boolean isFail(){
+		
 		if ( (Math.abs(c - m ) > 0 ) && (c!= 0) && (m!= 0))
-		{
 			return true;
-		}	
-		return false;
 	}
 	
-	public boolean isFound()
-	{
-		if (this.getC() == 0 && this.getM() == 0)
-			return true;
-		else
-			return false;
-	}
+}
+
 
 	public ArrayList<treeNode> expand()
 	{
@@ -168,6 +157,7 @@ public class treeNode {
 			z = crossRiver(1, 1);
 			t = crossRiver(0, 1);
 			k = crossRiver(0, 2);
+			
 			childList.add(x);
 			childList.add(y);
 			childList.add(z);
@@ -176,6 +166,21 @@ public class treeNode {
 			
 			return childList; // return childList shallow copy childList.clone()
 		}
+		}
+	
+	public void checkVisited(ArrayList<treeNode> extendedList){
+		Iterator<treeNode> extndItr = extendedList.iterator();
+		
+		while( extndItr.hasNext() ){
+			treeNode local = extndItr.next();
+			if (this.compare(local)){
+				this.isVisited = true
+				return;
+			}
+		}
+
+	
+		
 	}
 	
 	public boolean compare( treeNode extendedNode){
@@ -184,4 +189,3 @@ public class treeNode {
 		else
 			return false;
 	}
-}
