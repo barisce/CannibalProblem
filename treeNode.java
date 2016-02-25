@@ -1,10 +1,10 @@
-
 public class treeNode {
 	private boolean visited;
 	private boolean boat; //if false boat is going left if true boat is going right. Or true = boat is left side, false = boat is right side 
 	private int m;	// missionaries on left side, right side missionaries = 3 - m
 	private int c;	// cannibals on left side, right side cannibals = 3 - c
 	private treeNode x, y, z, t, k; 
+	private ArrayList<treeNode> childList;
 
     public treeNode () { 
     	m = 3;
@@ -137,3 +137,31 @@ public class treeNode {
 	}
 	
 }
+
+
+	public void expand(){
+		if ( this.isFail() || this.isVisited() )
+			return;
+		else {
+			x = crossRiver(2, 0);
+			y = crossRiver(1, 1);
+			z = crossRiver(1, 1);
+			t = crossRiver(0, 1);
+			k = crossRiver(0, 2);
+			return; // return childList shallow copy childList.clone()
+		}
+	}
+	
+	public void checkVisited(ArrayList<treeNode> extendedList){
+		// check the iterator shits
+		// compare and shit
+	
+		
+	}
+	
+	public boolean compare( treeNode extendedNode){
+		if ( ( extendedNode.getC() == this.c) && ( extendedNode.getM() == this.m) && (extendedNode.isBoat() == this.boat) )
+			return true;
+		else
+			return false;
+	}
