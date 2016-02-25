@@ -74,24 +74,23 @@ public class treeNode {
 		int mNew = 0;
 		
 		if( boat){
-			cNew = this.c - c;
-			mNew = this.m - m;
+			cNew = this.c + c;
+			mNew = this.m + m;
 			return new treeNode( cNew, mNew, false);
 		}
 		else{
-			cNew = this.c + c;
-			mNew = this.m + m;
+			cNew = this.c - c;
+			mNew = this.m - m;
 			return new treeNode( cNew, mNew, true);
 		}
 	}
 	
-	//not true, if 3 missionaries and 2 cannibals still fails
 	public boolean isFail()
 	{
-		if ( (Math.abs(c - m ) > 0 ) && (c!= 0) && (m!= 0))
+		if ( (c - m  > 0 ) && (c!= 0) && (m!= 0))
 		{
 			return true;
-		}	
+		}
 		return false;
 	}
 	
@@ -105,8 +104,9 @@ public class treeNode {
 
 	public treeNode expand(int i)
 	{
-		if ( this.isFail() || this.isVisited() )
-			return null;
+		
+		/*if ( this.isFail() || this.isVisited() )
+			return null;*/
 		if ( i == 0 )
 		{
 			x = crossRiver(2, 0);
@@ -141,24 +141,5 @@ public class treeNode {
 			return true;
 		else
 			return false;
-	}
-	
-	//returns the visited child node since only one child can be visited per run
-	private treeNode getVisitedChild()
-	{
-		if (this.getX().visited)
-			return this.x;
-		return this;
-	}
-	
-	public String toString(treeNode node)
-	{
-		String result = "";
-		while (!node.getVisitedChild().compare(node))
-		{
-			result += "C = " + node.getC() + "M = " + node.getM() + "Boat position = " + node.isBoat() + "\n";
-			node = node.getVisitedChild();
-		}
-		return result;
 	}
 }

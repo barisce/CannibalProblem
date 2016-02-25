@@ -7,17 +7,33 @@ public class main {
 	public static void main(String [ ] args)
 	{
 		ArrayList<treeNode> path = new ArrayList<treeNode>();
-		
+		boolean found;
 		Random randomGenerator = new Random();
 		treeNode main = new treeNode();
 		treeNode head = main; // to bookmark root node
 		path.add(head);
-		while (main.isFail() || main.isFound())
+		do
 		{
+			found = false;
 			int randomInt = randomGenerator.nextInt(5);
 			if (checkVisited(path, main.expand(randomInt)))
 			{
-				//not possible to go to randomInt
+				
+				for (int j = 0; j < 4; j++)
+				{
+					randomInt = (randomInt + 1) % 5;
+					if (!checkVisited(path, main.expand(randomInt)))
+					{
+						found = true;
+						break;
+					}
+				}
+				if (found)
+				{
+					main.setX(main.expand(randomInt));
+					main = main.expand(randomInt);
+					path.add(main);
+				}
 			}
 			else
 			{
@@ -25,7 +41,11 @@ public class main {
 				main = main.expand(randomInt);
 				path.add(main);
 			}
-		}
+			if (main.isFail())
+				break;
+			if (main.isFound())
+				break;
+		} while (true);
 		
 		if (main.isFound())
 		{
@@ -35,6 +55,8 @@ public class main {
 		{
 			System.out.println("Not Found!");
 		}
+		System.out.println("Program is finished with this order: ");
+		System.out.println(toString(path));
 	}
 	
 	public static boolean checkVisited(ArrayList<treeNode> extendedList, treeNode node){
@@ -46,5 +68,15 @@ public class main {
 			}
 		}
 		return false;
+	}
+	
+	public static String toString(ArrayList<treeNode> nodeList)
+	{
+		String result = "";
+		for (int i = 0; i < nodeList.size(); i++)
+		{
+			result += "C = " + nodeList.get(i).getC() + " M = " + nodeList.get(i).getM() + " Boat position = " + nodeList.get(i).isBoat() + "\n";
+		}
+		return result;
 	}
 }
