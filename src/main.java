@@ -2,9 +2,18 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class main {
-	
+	private static int freq = 0;
 	
 	public static void main(String [ ] args)
+	{
+		for (int i = 0; i < 1000; i++)
+		{
+			mandc();
+		}
+		System.out.println(freq);
+	}
+	
+	public static void mandc()
 	{
 		ArrayList<treeNode> path = new ArrayList<treeNode>();
 		boolean found;
@@ -35,6 +44,8 @@ public class main {
 					main = main.expand(randomInt);
 					path.add(main);
 				}
+				else
+					break;
 			}
 			else
 			{
@@ -45,9 +56,14 @@ public class main {
 			if (main.isFail())
 				break;
 			if (main.isFound())
+			{
+				freq++;
+				System.out.println(toString(path));
 				break;
+			}
 		} while (true);
 		
+		/*
 		if (main.isFound())
 		{
 			System.out.println("Found!");
@@ -55,12 +71,13 @@ public class main {
 		else
 		{
 			System.out.println("Not Found!");
-		}
-		System.out.println("Program is finished with this order: ");
-		System.out.println(toString(path));
+		}*/
+		
 	}
 	
 	public static boolean checkVisited(ArrayList<treeNode> extendedList, treeNode node){
+		if (node == null)
+			return true;
 		for (int i = 0; i < extendedList.size(); i++)
 		{
 			if (extendedList.get(i).compare(node))
@@ -76,7 +93,7 @@ public class main {
 		String result = "";
 		for (int i = 0; i < nodeList.size(); i++)
 		{
-			result += nodeList.get(i).getC() + "C, " + nodeList.get(i).getM() + "M, "  + "Boat position = " + nodeList.get(i).isBoat() + "\n";
+			result += nodeList.get(i).getC() + "C, " + nodeList.get(i).getM() + "M, "  + "Right = " + nodeList.get(i).isBoat() + "\n";
 		}
 		return result;
 	}

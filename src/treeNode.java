@@ -1,5 +1,4 @@
 public class treeNode {
-	private boolean visited;
 	private boolean boat; //if false boat is going left if true boat is going right. Or true = boat is left side, false = boat is right side 
 	private int m;	// missionaries on left side, right side missionaries = 3 - m
 	private int c;	// cannibals on left side, right side cannibals = 3 - c
@@ -9,7 +8,6 @@ public class treeNode {
     	m = 3;
     	c = 3;
     	boat = false;
-    	visited = false;
         x = null;
     } 
     
@@ -25,7 +23,6 @@ public class treeNode {
         this.m = m;
         this.c = c;
         boat = false;
-        visited = false;
         x = null;
     }
 	
@@ -33,17 +30,8 @@ public class treeNode {
         this.m = m;
         this.c = c;
         this.boat = boat;
-        visited = false;
         x = null;
     }
-
-	public boolean isVisited() {
-		return visited;
-	}
-
-	public void setVisited(boolean visited) {
-		this.visited = visited;
-	}
 
 	public int getM() {
 		return m;
@@ -76,11 +64,19 @@ public class treeNode {
 		if( boat){
 			cNew = this.c + c;
 			mNew = this.m + m;
+			if (mNew > 3 || mNew < 0 || cNew > 3 || cNew < 0)
+			{
+				return null;
+			}
 			return new treeNode( mNew, cNew, false);
 		}
 		else{
 			cNew = this.c - c;
 			mNew = this.m - m;
+			if (mNew > 3 || mNew < 0 || cNew > 3 || cNew < 0)
+			{
+				return null;
+			}
 			return new treeNode( mNew, cNew, true);
 		}
 	}
@@ -105,30 +101,48 @@ public class treeNode {
 	public treeNode expand(int i)
 	{
 		
-		/*if ( this.isFail() || this.isVisited() )
-			return null;*/
 		if ( i == 0 )
 		{
+			if (crossRiver(2, 0) == null)
+			{
+				return null;
+			}
 			x = crossRiver(2, 0);
 			return x;
 		}
 		if ( i == 1 )
 		{
+			if (crossRiver(1, 0) == null)
+			{
+				return null;
+			}
 			x = crossRiver(1, 0);
 			return x;
 		}
 		if ( i == 2 )
 		{
+			if (crossRiver(1, 1) == null)
+			{
+				return null;
+			}
 			x = crossRiver(1, 1);
 			return x;
 		}
 		if ( i == 3 )
 		{
+			if (crossRiver(0, 1) == null)
+			{
+				return null;
+			}
 			x = crossRiver(0, 1);
 			return x;
 		}
 		if ( i == 4 )
 		{
+			if (crossRiver(0, 2) == null)
+			{
+				return null;
+			}
 			x = crossRiver(0, 2);
 			return x;
 		}
