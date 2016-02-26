@@ -69,19 +69,19 @@ public class treeNode {
 		this.x = x;
 	}
 
-	public treeNode crossRiver( int c, int m){ // c or m <=2 && c+m <= 2 && c + m > 0
+	public treeNode crossRiver( int m, int c){ // c or m <=2 && c+m <= 2 && c + m > 0
 		int cNew = 0;
 		int mNew = 0;
 		
 		if( boat){
 			cNew = this.c + c;
 			mNew = this.m + m;
-			return new treeNode( cNew, mNew, false);
+			return new treeNode( mNew, cNew, false);
 		}
 		else{
 			cNew = this.c - c;
 			mNew = this.m - m;
-			return new treeNode( cNew, mNew, true);
+			return new treeNode( mNew, cNew, true);
 		}
 	}
 	

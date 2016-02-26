@@ -18,7 +18,7 @@ public class main {
 			int randomInt = randomGenerator.nextInt(5);
 			if (checkVisited(path, main.expand(randomInt)))
 			{
-				
+				main.setX(null);
 				for (int j = 0; j < 4; j++)
 				{
 					randomInt = (randomInt + 1) % 5;
@@ -27,6 +27,7 @@ public class main {
 						found = true;
 						break;
 					}
+					main.setX(null);
 				}
 				if (found)
 				{
@@ -38,7 +39,7 @@ public class main {
 			else
 			{
 				main.setX(main.expand(randomInt));
-				main = main.expand(randomInt);
+				main = main.getX();
 				path.add(main);
 			}
 			if (main.isFail())
@@ -75,7 +76,7 @@ public class main {
 		String result = "";
 		for (int i = 0; i < nodeList.size(); i++)
 		{
-			result += "C = " + nodeList.get(i).getC() + " M = " + nodeList.get(i).getM() + " Boat position = " + nodeList.get(i).isBoat() + "\n";
+			result += nodeList.get(i).getC() + "C, " + nodeList.get(i).getM() + "M, "  + "Boat position = " + nodeList.get(i).isBoat() + "\n";
 		}
 		return result;
 	}
